@@ -400,9 +400,9 @@ Accepts multiple space separated values, sends as a separate request.""",
     return args
 
 
-ARGS = get_arguments()
+def get_compose_mapping(args=sys.argv[1:]):
+    args = get_arguments(args=args)
 
-if ARGS.action == "test" and ARGS.package == "c2r":
-    COMPOSE_MAPPING = C2R_COMPOSE_MAPPING
-elif ARGS.action == "test" and ARGS.package == "leapp-repository":
-    COMPOSE_MAPPING = LP_COMPOSE_MAPPING
+    compose_mapping = {('test', 'c2r'): C2R_COMPOSE_MAPPING,
+                       ('test', 'leapp-repository'): LP_COMPOSE_MAPPING}
+    return compose_mapping.get((args.action, args.package), {})

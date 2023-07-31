@@ -7,15 +7,16 @@ import requests
 
 from dispatch.__init__ import (
     ARTIFACT_MAPPING,
-    COMPOSE_MAPPING,
     PACKAGE_MAPPING,
     get_arguments,
+    get_compose_mapping,
     get_logging,
 )
 from dispatch.tf_send_request import submit_test
 
 LOGGER = get_logging()
 ARGS = get_arguments()
+COMPOSE_MAPPING = get_compose_mapping()
 
 
 def main():
