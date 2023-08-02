@@ -3,13 +3,15 @@ import sys
 
 import koji
 
-from dispatch.__init__ import COMPOSE_MAPPING, get_arguments, get_logging
+from dispatch import get_compose_mapping, get_arguments, get_logging
 
 LOGGER = get_logging()
 ARGS = get_arguments()
 
 SESSION = koji.ClientSession("https://brewhub.engineering.redhat.com/brewhub")
 SESSION.gssapi_login()
+
+COMPOSE_MAPPING = get_compose_mapping()
 
 EPEL_COMPOSES = {
     "rhel-8": [
@@ -65,7 +67,10 @@ def get_brew_task_and_compose(package, reference):
     return {tasks[i]: volume_names[i] for i in range(len(tasks))}
 
 
-def get_info(package, repository, reference, composes):
+def get_info(
+    package, repository, reference, composes, source_release=None, target_release=None
+):
+
     brew_dict = {}
     info = []
     compose_selection = []
